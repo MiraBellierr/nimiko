@@ -20,12 +20,14 @@ module.exports = {
 				name: message.author.username,
 				iconURL: message.author.displayAvatarURL(),
 			})
+			.setThumbnail("https://cdn3.emoji.gg/emojis/7127-bow.png")
 			.setFields([
 				{
 					name: "Suggestions",
 					value: suggestions,
 				},
 			])
+			.setColor(Discord.Colors.DarkButNotBlack)
 			.setTimestamp();
 
 		const m = await suggestChannel.send({ embeds: [embed] });
