@@ -8,12 +8,7 @@ module.exports = async (client, message) => {
 		return;
 	}
 
-	if (!client.prefixes.get(message.guild.id)) {
-		// eslint-disable-next-line no-undef
-		client.prefixes.set(message.guild.id, process.env.PREFIX);
-	}
-
-	const prefix = client.prefixes.get(message.guild.id);
+	const prefix = client.prefixes.get(process.env.PREFIX);
 
 	if (
 		!(
