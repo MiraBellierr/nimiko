@@ -16,6 +16,8 @@ module.exports = async (client, oldState, newState) => {
 
 	const channel = client.voiceChannels.get(oldState.member.id);
 
+	if (!channel) return;
+
 	if (oldState && oldState.channelId === channel.id) {
 		oldState.guild.channels.delete(channel);
 	}
