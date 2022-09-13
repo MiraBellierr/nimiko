@@ -13,6 +13,7 @@ const client = new Discord.Client({
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+client.voiceChannels = new Discord.Collection();
 client.categories = fs.readdirSync("src/commands/");
 
 ["command", "event"].forEach((handler) => {
