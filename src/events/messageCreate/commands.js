@@ -8,7 +8,7 @@ module.exports = async (client, message) => {
 		return;
 	}
 
-	const prefix = client.prefixes.get(process.env.PREFIX);
+	const prefix = process.env.PREFIX;
 
 	if (
 		!(
