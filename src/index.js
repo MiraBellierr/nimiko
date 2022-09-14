@@ -23,6 +23,6 @@ client.categories = fs.readdirSync("src/commands/");
 
 setInterval(() => {
 	getNews(client);
-}, 5000);
+}, 10000);
 
 client.login(process.env.TOKEN);
