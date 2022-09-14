@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = async (client, news) => {
-	if (client.news === news.title) return;
+	if (news && client.news === news.title) return;
 
 	const channel = await client.channels.fetch("1019470434095337472");
 
