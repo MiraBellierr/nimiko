@@ -13,12 +13,14 @@ module.exports = async (client, news) => {
 		.setColor(Discord.Colors.Navy)
 		.setTimestamp(new Date(news.date));
 
-	channel.send({
+	const m = await channel.send({
 		content: `Recent news has just published on <t:${Math.floor(
 			new Date(news.date).getTime() / 1000
 		)}:f>`,
 		embeds: [embed],
 	});
+
+	m.crosspost();
 
 	client.news = news.title;
 };
