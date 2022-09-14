@@ -3,7 +3,7 @@ const cheerio = require("cheerio");
 const fs = require("fs");
 
 module.exports = async function getNews(client) {
-	let newsCount = fs.readFileSync(
+	let previousNews = fs.readFileSync(
 		"./src/database/json/news.json",
 		"utf8",
 		(err, data) => {
@@ -13,9 +13,10 @@ module.exports = async function getNews(client) {
 		}
 	);
 
-	newsCount = JSON.parse(newsCount);
+	previousNews = JSON.parse(previousNews);
 
-	if (!newsCount.count) newsCount.count = 0;
+	if (!previousNews.count) previousNews.count = 0;
+	if (!previousNews.title) previousNews.title = null;
 
 	const browser = await puppeteer.launch({
 		headless: true,
@@ -54,12 +55,15 @@ module.exports = async function getNews(client) {
 		}
 	);
 
-	if (newsCount.count !== news.length) {
+	if (
+		previousNews.count !== news.length &&
+		news[0].title !== previousNews.title
+	) {
 		client.emit("animeNews", news[0]);
 
 		fs.writeFileSync(
 			"./src/database/json/news.json",
-			JSON.stringify({ count: news.length })
+			JSON.stringify({ count: news.length, title: news[0].title })
 		);
 	}
 

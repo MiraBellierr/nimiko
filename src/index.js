@@ -14,7 +14,6 @@ const client = new Discord.Client({
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.news = null;
 client.voiceChannels = new Discord.Collection();
 client.categories = fs.readdirSync("src/commands/");
 

@@ -1,8 +1,6 @@
 const Discord = require("discord.js");
 
 module.exports = async (client, news) => {
-	if (news && client.news === news.title) return;
-
 	const channel = await client.channels.fetch("1019470434095337472");
 
 	const embed = new Discord.EmbedBuilder()
@@ -21,6 +19,4 @@ module.exports = async (client, news) => {
 	});
 
 	m.crosspost();
-
-	client.news = news.title;
 };
