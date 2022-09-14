@@ -3,7 +3,7 @@ const cheerio = require("cheerio");
 const fs = require("fs");
 
 module.exports = async function getNews(client) {
-	let previousNews = fs.readFile(
+	let previousNews = fs.readFileSync(
 		"./src/database/json/news.json",
 		"utf8",
 		(err, data) => {
@@ -61,7 +61,10 @@ module.exports = async function getNews(client) {
 	) {
 		fs.writeFile(
 			"./src/database/json/news.json",
-			JSON.stringify({ count: news.length, title: news[0].title })
+			JSON.stringify({ count: news.length, title: news[0].title }),
+			(err) => {
+				if (err) console.log(err);
+			}
 		);
 
 		client.emit("animeNews", news[0]);
