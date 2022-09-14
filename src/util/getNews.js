@@ -17,7 +17,10 @@ module.exports = async function getNews(client) {
 
 	if (!newsCount.count) newsCount.count = 0;
 
-	const browser = await puppeteer.launch({ headless: true });
+	const browser = await puppeteer.launch({
+		headless: true,
+		args: ["--no-sandbox"],
+	});
 	const page = await browser.newPage();
 	await page.goto("https://www.animenewsnetwork.com/");
 	await page.click("span.topics:nth-child(6) > span:nth-child(1)");
