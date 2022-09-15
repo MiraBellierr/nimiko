@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Discord = require("discord.js");
 const fs = require("fs");
-const getNews = require("./util/getNews");
+const { getNews } = require("./util/getNews");
 const intents = [];
 
 Object.keys(Discord.IntentsBitField.Flags).forEach((intent) => {

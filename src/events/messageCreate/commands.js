@@ -73,8 +73,7 @@ module.exports = async (client, message) => {
 	try {
 		await command.run(client, message, args);
 	} catch (err) {
-		message.reply(
-			"There was an error trying to execute this command. Report it by joining our server: https://discord.gg/NcPeGuNEdc"
-		);
+		console.log(err);
+		message.reply("There was an error trying to execute this command.");
 	}
 };
