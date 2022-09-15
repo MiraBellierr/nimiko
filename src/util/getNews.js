@@ -46,21 +46,6 @@ async function getAllNews(client) {
 }
 
 async function getNews(client) {
-	let previousNews = fs.readFileSync(
-		"./src/database/json/news.json",
-		"utf8",
-		(err, data) => {
-			if (err) console.log(err);
-
-			return data;
-		}
-	);
-
-	previousNews = JSON.parse(previousNews);
-
-	if (!previousNews.count) previousNews.count = 0;
-	if (!previousNews.title) previousNews.title = null;
-
 	const browser = await puppeteer.launch({
 		headless: true,
 		args: ["--no-sandbox"],
@@ -98,6 +83,21 @@ async function getNews(client) {
 		}
 	);
 
+	let previousNews = fs.readFileSync(
+		"./src/database/json/news.json",
+		"utf8",
+		(err, data) => {
+			if (err) console.log(err);
+
+			return data;
+		}
+	);
+
+	previousNews = JSON.parse(previousNews);
+
+	if (!previousNews.count) previousNews.count = 0;
+	if (!previousNews.title) previousNews.title = null;
+
 	if (
 		previousNews.count !== news.length &&
 		news[0].title !== previousNews.title
@@ -116,4 +116,66 @@ async function getNews(client) {
 	await browser.close();
 }
 
-module.exports = { getAllNews, getNews };
+async function getHoloNews(client) {
+	const browser = await puppeteer.launch({
+		headless: true,
+		args: ["--no-sandbox"],
+	});
+	const page = await browser.newPage();
+
+	await page.goto("https://twitter.com/hololive_En", {
+		waitUntil: "networkidle2",
+	});
+
+	await page.waitForSelector("article[data-testid='tweet']");
+
+	const html = await page.content();
+	const $ = cheerio.load(html);
+
+	const URLs = [];
+
+	$("article[data-testid='tweet']")
+		.find("a")
+		.each((i, el) => {
+			if ($(el).attr("href").includes("/status/")) {
+				const url = `https://twitter.com${$(el).attr("href")}`;
+
+				URLs.push(url);
+			}
+		});
+
+	const url = URLs[0];
+
+	const splitUrl = url.split("/");
+	const id = splitUrl[splitUrl.length - 1].split("?")[0];
+
+	let previousNews = fs.readFileSync(
+		"./src/database/json/holo.json",
+		"utf8",
+		(err, data) => {
+			if (err) console.log(err);
+
+			return data;
+		}
+	);
+
+	previousNews = JSON.parse(previousNews);
+
+	console.log(id, previousNews.id, id === previousNews.id);
+
+	if (previousNews.id !== id) {
+		fs.writeFile(
+			"./src/database/json/holo.json",
+			JSON.stringify({ id }),
+			(err) => {
+				if (err) console.log(err);
+			}
+		);
+
+		client.emit("holoTweet", url);
+	}
+
+	await browser.close();
+}
+
+module.exports = { getAllNews, getNews, getHoloNews };

@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Discord = require("discord.js");
 const fs = require("fs");
-const { getNews } = require("./util/getNews");
+const { getNews, getHoloNews } = require("./util/getNews");
 const intents = [];
 
 Object.keys(Discord.IntentsBitField.Flags).forEach((intent) => {
@@ -24,5 +24,9 @@ client.categories = fs.readdirSync("src/commands/");
 setInterval(() => {
 	getNews(client);
 }, 10000);
+
+setInterval(() => {
+	getHoloNews(client);
+}, 10100);
 
 client.login(process.env.TOKEN);
