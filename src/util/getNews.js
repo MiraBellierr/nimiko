@@ -98,6 +98,15 @@ async function getNews(client) {
 	if (!previousNews.count) previousNews.count = 0;
 	if (!previousNews.title) previousNews.title = null;
 
+	console.log(
+		"news status",
+		news.length,
+		previousNews.count,
+		news[0].title,
+		previousNews.title,
+		previousNews.count !== news.length && news[0].title !== previousNews.title
+	);
+
 	if (
 		previousNews.count !== news.length &&
 		news[0].title !== previousNews.title
@@ -161,7 +170,7 @@ async function getHoloNews(client) {
 
 	previousNews = JSON.parse(previousNews);
 
-	console.log(id, previousNews.id, id === previousNews.id);
+	console.log("hololive status", id, previousNews.id, id === previousNews.id);
 
 	if (previousNews.id !== id) {
 		fs.writeFile(
