@@ -5,5 +5,5 @@ module.exports = async (client, url) => {
 
 	const m = await channel.send(`${url}`);
 
-	// m.crosspost();
+	m.crosspost();
 };

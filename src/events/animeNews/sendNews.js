@@ -11,12 +11,12 @@ module.exports = async (client, news) => {
 		.setColor(Discord.Colors.Navy)
 		.setTimestamp(new Date(news.date));
 
-	// const m = await channel.send({
-	// 	content: `Recent news has just published on <t:${Math.floor(
-	// 		new Date(news.date).getTime() / 1000
-	// 	)}:f>`,
-	// 	embeds: [embed],
-	// });
+	const m = await channel.send({
+		content: `Recent news has just published on <t:${Math.floor(
+			new Date(news.date).getTime() / 1000
+		)}:f>`,
+		embeds: [embed],
+	});
 
-	// m.crosspost();
+	m.crosspost();
 };
