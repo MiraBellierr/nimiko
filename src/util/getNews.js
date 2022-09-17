@@ -83,6 +83,8 @@ async function getNews(client) {
 		}
 	);
 
+	if (news.length < 1) return console.log("Checking for new Anime news... no news yet");
+
 	let previousNews = fs.readFileSync(
 		"./src/database/json/news.json",
 		"utf8",
