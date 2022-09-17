@@ -99,12 +99,11 @@ async function getNews(client) {
 	if (!previousNews.title) previousNews.title = null;
 
 	console.log(
-		"news status",
-		news.length,
-		previousNews.count,
-		news[0].title,
-		previousNews.title,
-		previousNews.count !== news.length && news[0].title !== previousNews.title
+		`Checking for new Anime news... (${news[0].title}) - latest? - ${
+			previousNews.count === news.length && news[0].title === previousNews.title
+				? "yes"
+				: "no, updating..."
+		}`
 	);
 
 	if (
@@ -170,7 +169,11 @@ async function getHoloNews(client) {
 
 	previousNews = JSON.parse(previousNews);
 
-	console.log("hololive status", id, previousNews.id, id === previousNews.id);
+	console.log(
+		`Checking for new HoloNews... (${id}) - latest? - ${
+			id === previousNews.id ? "yes" : "no, updating..."
+		}`
+	);
 
 	if (previousNews.id !== id) {
 		fs.writeFile(

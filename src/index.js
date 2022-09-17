@@ -23,10 +23,7 @@ client.categories = fs.readdirSync("src/commands/");
 
 setInterval(() => {
 	getNews(client);
-}, 10000);
-
-setInterval(() => {
 	getHoloNews(client);
-}, 10100);
+}, 60000);
 
 client.login(process.env.TOKEN);
