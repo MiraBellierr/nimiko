@@ -21,6 +21,9 @@ client.categories = fs.readdirSync("src/commands/");
 	require(`./handler/${handler}`)(client);
 });
 
+getNews(client);
+getHoloNews(client);
+
 setInterval(() => {
 	getNews(client);
 	getHoloNews(client);
