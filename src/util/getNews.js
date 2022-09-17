@@ -83,7 +83,11 @@ async function getNews(client) {
 		}
 	);
 
-	if (news.length < 1) return console.log("Checking for new Anime news... no news yet");
+	if (news.length < 1) {
+		await browser.close();
+
+		return console.log("Checking for new Anime news... no news yet");
+	}
 
 	let previousNews = fs.readFileSync(
 		"./src/database/json/news.json",
